@@ -1,0 +1,93 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+<!-- title -->
+{% block title %} Course Training &mdash; Dreamworks Training {% endblock %}
+
+
+<!-- content -->
+{% block content %}
+
+
+      <!-- Main Content -->
+      <div class="main-content">
+            <section class="section">
+              <div class="section-header">
+                <h1>{{ course_category.name }} Course Materials</h1>
+                
+              </div>
+              <div class="section-body">
+               
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card mb-0">
+                      <div class="card-body">
+                        <ul class="nav nav-pills">
+                          <li class="nav-item">
+                            <a class="nav-link active" href="#">All <span class="badge badge-white">
+                                    {% with course_materials.count as total_course_materials %}
+                                    {{ total_course_materials }}
+                                    {% endwith %}
+                            </span></a>
+                          </li>
+                          
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-4">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <h4>All Course Materials</h4>
+                      </div>
+                      <div class="card-body">
+                       
+                        
+    
+                        <div class="clearfix mb-3"></div>
+    
+                        <div class="table-responsive">
+                          <table class="table table-striped">
+                            <tr>
+                              
+                              <th>Title</th>
+                              <th>Category</th>
+                              <th>Type</th>
+                              <th>Action</th>
+                            </tr>
+                            {% if course_materials %}
+                                {% for material in course_materials %}
+                                <tr>
+                                        <td>{{ material.title }}
+                                        </td>
+                                        <td>
+                                            {{ material.category }}
+                                          
+                                        </td>
+                                        <td>
+                                          {{ material.course_type }}
+                                        </td>
+                                        
+                                         <td><a href="{{ material.download_link }}"><div class="badge badge-primary">Download</div></a></td>
+                                      </tr>
+                                {% endfor %}
+                            {% endif %}
+                           
+                           
+                          </table>
+                        </div>
+                       
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+            
+    <!--        END COPYING-->
+          
+
+{% endblock %}

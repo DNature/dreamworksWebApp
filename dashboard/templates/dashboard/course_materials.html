@@ -1,0 +1,105 @@
+{% extends 'dashboard/base.html' %}
+{% load static  %}
+{% load widget_tweaks %}
+
+
+<!-- title -->
+{% block title %} Course Materials &mdash; Dreamworks Training {% endblock %}
+
+
+<!-- content -->
+{% block content %}
+<!-- Main Content -->
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>All Course Materials</h1>
+
+        </div>
+        <div class="section-body">
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-0">
+                        <div class="card-body">
+                            <ul class="nav nav-pills">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#">All <span class="badge badge-white">
+                                            {% with course_materials.count as total_course_materials %}
+                                            {{ total_course_materials }}
+                                            {% endwith %}
+                                        </span></a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>All Course Materials</h4>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="float-right">
+                                <form method="GET">
+                                    <div class="input-group">
+                                        <!-- {{ filter.form.title.label_tag }} -->
+                                        {% render_field filter.form.title class="form-control" placeholder=filter.form.title.label %}
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="clearfix mb-3"></div>
+
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+
+                                    <tr>
+
+                                        <th>Title</th>
+                                        <th>Category</th>
+                                        <th>Type</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    {% if course_materials %}
+                                         {% for materials in filter.qs %}
+
+                                         <tr>
+                                                <td>{{materials.title}}
+                                                </td>
+                                                <td>
+                                                    {{materials.category}}
+        
+                                                </td>
+                                                <td>
+                                                    {{ materials.course_type }}
+                                                </td>
+        
+                                                <td><a href="{{ materials.download_link }}">
+                                                        <div class="badge badge-primary">Download</div>
+                                                    </a></td>
+                                            </tr>
+
+                                         {% endfor %}
+                                    {% endif %}
+
+
+                                </table>
+                            </div>
+                            {% include "dashboard/paginator.html" with page=page_obj %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

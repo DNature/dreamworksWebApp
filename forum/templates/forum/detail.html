@@ -1,0 +1,126 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+<!-- title -->
+{% block title %}Details &mdash; Dreamworks Training{% endblock %}
+
+
+<!-- content -->
+{% block content %}
+
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>{{ question.title }}</h1>
+
+        </div>
+
+        <div class="section-body">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+
+                        </div>
+                        <div class="card-body">
+
+                            <div class="tickets">
+
+                                <div class="ticket-content">
+                                    <div class="ticket-header">
+                                        <div class="ticket-sender-picture img-shadow">
+                                            <img src="{{ question.user.profile.image.url }}" alt="image">
+                                        </div>
+                                        <div class="ticket-detail">
+                                            <div class="ticket-title">
+                                                <h4>{{ question.title }}</h4>
+                                            </div>
+                                            <div class="ticket-info">
+                                                <div class="font-weight-600">{{ question.user.last_name }}
+                                                    {{ question.user.first_name }}</div>
+                                                <div class="bullet"></div>
+                                                <div class="text-primary font-weight-600"> Asked {{ question.created }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ticket-description">
+                                        <p>{{ question.Question }}</p>
+
+
+
+                                        <h4>
+                                            {% with answer.count as total_answer %}
+                                            {{ total_answer }} Answers
+                                            {% endwith %}
+                                        </h4>
+                                        <div class="ticket-divider"></div>
+                                        {% if answer %}
+                                        {% for ans in answer %}
+                                        <div class="ticket-header">
+                                            <div class="ticket-sender-picture img-shadow">
+                                                <img src="{{ ans.user.profile.image.url }}" alt="image">
+                                            </div>
+                                            <div class="ticket-detail">
+                                                <div class="ticket-info">
+                                                    <div class="font-weight-600">{{ ans.user.last_name }}
+                                                        {{ ans.user.first_name }}</div>
+                                                    <br>
+                                                    <div class="bullet"></div>
+
+                                                    <div class="text-primary font-weight-600"> Answered
+                                                        {{ ans.created }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ticket-description">
+                                            <p>{{ ans.answer }}</p>
+
+                                        </div>
+                                        {% endfor %}
+                                        {% else %}
+                                        <p>No Answers Yet</p>
+                                        {% endif %}
+
+
+                                        <div class="ticket-form">
+                                            <form method="POST">
+                                                {% csrf_token %}
+                                                <div class="form-group">
+                                                    {{ ans_form.answer|as_crispy_field }}
+                                                </div>
+                                                <div class="form-group text-right">
+                                                    <button class="btn btn-primary btn-lg">
+                                                        Submit
+                                                    </button>
+                                                </div>
+                                            </form>
+                                            <!-- --------------------MESSAGE------------- -->
+                                            {% for message in messages %}
+                                            <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                {{ message }}
+                                            </div>
+                                            {% endfor %}
+                                            <!-- ----------------END MESSAGE -->
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+{% endblock %}

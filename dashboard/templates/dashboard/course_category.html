@@ -1,0 +1,53 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+
+<!-- title -->
+{% block title %} Course Category &mdash; Dreamworks Training {% endblock %}
+
+
+<!-- contents -->
+{% block content %}
+
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <section class="section">
+                        <div class="section-header">
+                            <h1>Course Category</h1>
+
+                        </div>
+
+                        <div class="section-body">
+
+
+                            <div class="row">
+                                {% if course_category %}
+                                    {% for category in course_category %}
+                                    <div class="col-lg-6">
+                                            <div class="card card-large-icons">
+        
+                                                <div class="card-body">
+                                                    <h4>{{ category.name }}</h4>
+                                                    <p>{{ category.description }}</p>
+                                                    <a href="{% url 'course_list' category.id %}" class="card-cta">View Course Materials<i class="fas fa-chevron-right"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                               
+                                
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!--        END COPYING-->
+
+
+
+
+
+
+{% endblock %}

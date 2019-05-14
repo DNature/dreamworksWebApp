@@ -1,0 +1,138 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+
+<!-- title section -->
+{% block title %} Dashboard &mdash; Dreamworks Training {% endblock %}
+
+
+
+<!-- content section -->
+{% block content %}
+
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>Dashboard</h1>
+        </div>
+
+        <!-- --------------------MESSAGE------------- -->
+        {% for message in messages %}
+        <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ message }}
+        </div>
+        {% endfor %}
+        <!-- ----------------END MESSAGE -->
+
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                <div class="card card-statistic-1">
+                    <div class="card-icon bg-primary">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>Course Materials</h4>
+                        </div>
+                        <div class="card-body">
+                            {% with course_material.count as total_course_material %}
+                                {{ total_course_material }}
+                            {% endwith %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                <div class="card card-statistic-1">
+                    <div class="card-icon bg-danger">
+                        <i class="far fa-newspaper"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>Course Category</h4>
+                        </div>
+                        <div class="card-body">
+                            {% with course_category.count as total_course_category %}
+                              {{ total_course_category }}
+                            {% endwith %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                <div class="card card-statistic-1">
+                    <div class="card-icon bg-warning">
+                        <i class="far fa-file"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>Forum Questions</h4>
+                        </div>
+                        <div class="card-body">
+                            {% with questions.count as total_questions %}
+                                {{ total_questions }}
+                            {% endwith %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-12 col-md-12 col-12 col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Latest Course Materials</h4>
+
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <tr>
+
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Type</th>
+                                    <th>Action</th>
+                                </tr>
+                                {% if latest_course_material %}
+                                    {% for latest in latest_course_material %}
+
+                                    <tr>
+                                        <td>{{ latest.title }}
+                                        </td>
+                                        <td>
+                                            {{ latest.category }}
+    
+                                        </td>
+                                        <td>
+                                            {{ latest.course_type }}
+                                        </td>
+    
+                                        <td><a href="{{ latest.download_link }}">
+                                                <div class="badge badge-primary">Download</div>
+                                            </a></td>
+                                    </tr>
+
+                                    {% endfor %}
+
+                                {% endif %}
+                                
+                               
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+{% endblock %}
